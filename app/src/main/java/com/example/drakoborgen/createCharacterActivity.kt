@@ -1,9 +1,15 @@
 package com.example.drakoborgen
 
 import android.os.Bundle
+import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import org.json.JSONArray
+import org.json.JSONObject
+import java.io.File
 
 class createCharacterActivity : AppCompatActivity() {
 
@@ -12,6 +18,9 @@ class createCharacterActivity : AppCompatActivity() {
     lateinit var armorNumber: TextView
     lateinit var agilityNumber: TextView
     lateinit var totalNumber: TextView
+    lateinit var nameEditText: EditText
+
+    val charList = mutableListOf<Character>()
     var luck: Int = 5
     var strength: Int = 5
     var armor: Int = 5
@@ -27,6 +36,7 @@ class createCharacterActivity : AppCompatActivity() {
         armorNumber = findViewById(R.id.armorNumber)
         agilityNumber = findViewById(R.id.agilityNumber)
         totalNumber = findViewById(R.id.totalNumber)
+        nameEditText = findViewById(R.id.enterNameView)
 
         totalNumber.text = getString(R.string.total, total.toString())
 
@@ -38,6 +48,8 @@ class createCharacterActivity : AppCompatActivity() {
         val btnRemoveArmor: ImageButton = findViewById(R.id.armorRemove)
         val btnAddAgility: ImageButton = findViewById(R.id.agilityAdd)
         val btnRemoveAgility: ImageButton = findViewById(R.id.agilityRemove)
+
+        val btnSave: Button = findViewById(R.id.saveButton)
 
 
         btnAddLuck.setOnClickListener() {
@@ -81,9 +93,45 @@ class createCharacterActivity : AppCompatActivity() {
             }
         }
 
+        btnSave.setOnClickListener() {
+            SaveCharacter()
+        }
+
 
     }
 
+
+    fun SaveCharacter() {
+        val newCharacter = Character(nameEditText.text.toString(), luck, strength, armor, agility)
+        val json = JSONObject()
+        json.put("name", newCharacter.name)
+        json.put("luck", newCharacter.luck)
+        json.put("strength", newCharacter.strength)
+        json.put("armor", newCharacter.armor)
+        json.put("agility", newCharacter.agility)
+        charList.add(newCharacter)
+
+        val jsonList = JSONArray()
+
+        charList.forEach() {character ->
+            val charJSON = JSONObject()
+            charJSON.put("name", character.name)
+            charJSON.put("luck", character.luck)
+            charJSON.put("strength", character.strength)
+            charJSON.put("armor", character.armor)
+            charJSON.put("agility", character.agility)
+
+            jsonList.put(charJSON)
+        }
+
+        try {
+            val filePath = this.filesDir.absolutePath + "/characters.json"
+            File(filePath).writeText(jsonList.toString())
+            Toast.makeText(this, "Det funkade ${this.filesDir}", Toast.LENGTH_SHORT).show()
+        } catch (e: Exception) {
+            Toast.makeText(this, "Det funkade ej. Fel: ${e.message}", Toast.LENGTH_SHORT).show()
+        }
+    }
     fun addValue(attribute: String) {
         when (attribute) {
             "luck" -> {
