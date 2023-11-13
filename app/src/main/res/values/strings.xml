@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Drakoborgen</string>
+    <string name="drakborgen_logo">Drakborgen logotyp</string>
+    <string name="createCharacter">Skapa ny karaktär</string>
+    <string name="loadCharacter">Ladda karaktär</string>
+    <string name="save">Spara</string>
+    <string name="luck">Tur</string>
+    <string name="strength">Styrka</string>
+    <string name="armor">Rustning</string>
+    <string name="agility">Vighet</string>
+    <string name="total">Totalt: %1$s</string>
+
+</resources>
