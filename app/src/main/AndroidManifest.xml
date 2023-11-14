@@ -13,6 +13,9 @@
         android:theme="@style/Theme.Drakoborgen"
         tools:targetApi="31">
         <activity
+            android:name=".loadCharactersActivity"
+            android:exported="false" />
+        <activity
             android:name=".createCharacterActivity"
             android:exported="false" />
         <activity
