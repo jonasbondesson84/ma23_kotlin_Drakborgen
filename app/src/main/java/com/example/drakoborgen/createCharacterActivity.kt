@@ -1,5 +1,6 @@
 package com.example.drakoborgen
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -95,6 +96,9 @@ class createCharacterActivity : AppCompatActivity() {
 
         btnSave.setOnClickListener() {
             SaveCharacter()
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+
         }
 
 
